@@ -4,6 +4,5 @@ include mixins/_productForm
 
 block content 
   .inner
-    pre= h.dump(product)
     h2= title
-    +productForm()
+    +productForm(product)

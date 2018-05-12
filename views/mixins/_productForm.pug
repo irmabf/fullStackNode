@@ -1,13 +1,16 @@
 mixin productForm(product = {})
-  form(action="/add" method="POST" class="card")
+  form(action=`/add/${product._id || ''}` method="POST" class="card")
     label(for="name") Article Name 
-    input(type="text" name="name")
+    input(type="text" name="name" value=product.name)
+    label(for="price") Price $
+    input(type="number" name="price" value=product.price)
     label(for="description") Description
-    textarea(name="description")
-    - const choices = ['Technology', 'Clothes','Books', 'Furniture', 'Antique', 'Sports','Mobile', 'Toys']
+    textarea(name="description")= product.description
+    - const choices = ['Technology', 'Clothes','Books', 'Furniture', 'Antique', 'Sports','Mobile', 'Toys', 'For kids', 'Outdoors', 'Office', 'Relax']
+    - const tags = product.tags || []
     ul.tags
       each choice in choices
         .tag.tag__choice
-          input(type="checkbox" id=choice value=choice name="tags")
+          input(type="checkbox" id=choice value=choice name="tags" checked=(tags.includes(choice)))
           label(for=choice) #{choice}
     input(type="submit" value="Save →" class="button")

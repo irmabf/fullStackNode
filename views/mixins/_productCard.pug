@@ -11,4 +11,6 @@ mixin productCard(product = {})
         a(href=`/product/${product.slug}`) #{product.name}
     .store__details
       p= product.description.split(' ').slice(0, 25).join(' ')
+    .store__details.store__price
+      p= `Price: $ ${product.price}`
         

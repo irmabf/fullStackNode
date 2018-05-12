@@ -13,6 +13,10 @@ const productSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  price: {
+    type: Number,
+    required: 'Please enter the price as a number'
+  },
   tags: [String]
 });
 
