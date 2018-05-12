@@ -34,6 +34,8 @@ exports.editProduct = async (req, res) => {
 };
 
 exports.updateProduct = async (req, res) => {
+  //set the location data to be a point
+  req.body.location.type = 'Point';
   //1. Find and update the product 
   const product = await Product.findOneAndUpdate({ _id: req.params.id}, req.body, {
     new: true, //return the new product instead of the old one
