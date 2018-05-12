@@ -1,0 +1,11 @@
+mixin productCard(product = {})
+  .store
+    .store__hero 
+      .store__actions 
+        button soon
+      img(src=`/uploads/${product.photo || 'store.png'}`)
+      h2.title 
+        a(href=`/product/${product.slug}`) #{product.name}
+    .store__details
+      p= product.description.split(' ').slice(0, 25).join(' ')
+        

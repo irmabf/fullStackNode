@@ -16,3 +16,10 @@ exports.createProduct = async (req, res) => {
   req.flash('success', `Successfully Added ${product.name}`);
   res.redirect(`/product/${product.slug}`);
 };
+
+exports.getProducts = async (req, res) => {
+  //1. Query the database for the articles.
+  const products = await Product.find();
+  console.log(products);
+  res.render('products', { title: 'Articles', products });
+};
