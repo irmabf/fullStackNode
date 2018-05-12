@@ -32,3 +32,15 @@ exports.editProduct = async (req, res) => {
   res.render('editProduct', { title: `Edit ${product.name}`, product });
 
 };
+
+exports.updateProduct = async (req, res) => {
+  //1. Find and update the product 
+  const product = await Product.findOneAndUpdate({ _id: req.params.id}, req.body, {
+    new: true, //return the new product instead of the old one
+    runValidators: true
+  }).exec();
+  req.flash('success', `Succesfully updated <strong>${product.name}</strong>. <a href="/products/${product.slug}">View article →</a>`);
+  res.redirect(`/products/${product._id}/edit`);
+  //2. Redirect to the product and tell the user it worked
+ 
+};
