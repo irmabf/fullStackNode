@@ -6,7 +6,16 @@ mixin productForm(product = {})
     input(type="number" name="price" value=product.price)
     label(for="description") Description
     textarea(name="description")= product.description
-    - const choices = ['Technology', 'Clothes','Books', 'Furniture', 'Antique', 'Sports','Mobile', 'Toys', 'For kids', 'Outdoors', 'Office', 'Relax']
+    //- address, lng and lat
+    label(for="address") Address
+    input(type="text" id="address" name="location[address]" value=(product.location && product.location.address))
+    label(for="lng") Address Lng 
+    input(type="text" id="lng" name="location[coordinates][0]" value=(product.location && product.location.coordinates[0]) required)
+    label(for="lng") Address Lat
+    input(type="text" id="lat" name="location[coordinates][1]" value=(product.location && product.location.coordinates[1]) required)
+    //pre= h.dump(product)
+
+    - const choices = ['Technology', 'Clothes','Books', 'Furniture', 'Antique', 'Sports','Mobile', 'Toys', 'For kids', 'Outdoors', 'Office', 'Relax', 'Jewels']
     - const tags = product.tags || []
     ul.tags
       each choice in choices
