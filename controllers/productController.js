@@ -12,7 +12,7 @@ exports.addProduct = (req, res) => {
 
 exports.createProduct = async (req, res) => {
   //res.json(req.body);
-  const product = new Product(req.body);
-  await product.save();
-  res.redirect('/');
+  const product = await (new Product(req.body)).save();
+  req.flash('success', `Successfully Added ${product.name}`);
+  res.redirect(`/product/${product.slug}`);
 };
