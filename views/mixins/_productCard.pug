@@ -6,7 +6,7 @@ mixin productCard(product = {})
           a(href=`/products/${product._id}/edit`)
             != h.icon('pencil')
         button soon
-      img(src=`/uploads/${product.photo || 'store.png'}`)
+      img(src=`/uploads/${product.photo || 'store.jpg'}`)
       h2.title 
         a(href=`/product/${product.slug}`) #{product.name}
     .store__details
