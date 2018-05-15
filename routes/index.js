@@ -12,7 +12,7 @@ router.post('/add',
     catchErrors(productController.resize),
     catchErrors(productController.createProduct)
   );
-  
+
 router.post('/add/:id/', 
     productController.upload,
     catchErrors(productController.resize),
@@ -21,5 +21,6 @@ router.post('/add/:id/',
 
 router.get('/products/:id/edit', catchErrors(productController.editProduct));
 
+router.get('/product/:slug', catchErrors(productController.getProductBySlug));
 
 module.exports = router;

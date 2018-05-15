@@ -79,5 +79,12 @@ exports.updateProduct = async (req, res) => {
   req.flash('success', `Succesfully updated <strong>${product.name}</strong>. <a href="/products/${product.slug}">View article →</a>`);
   res.redirect(`/products/${product._id}/edit`);
   //2. Redirect to the product and tell the user it worked
- 
+};
+
+exports.getProductBySlug = async (req, res) => {
+  //res.json(req.params);
+  const product = await Product.findOne({ slug: req.params.slug });
+  //res.json(product)
+  if(!product) return next();
+  res.render('product', { product, title: product.name });
 };
