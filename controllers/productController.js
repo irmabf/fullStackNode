@@ -90,9 +90,19 @@ exports.getProductBySlug = async (req, res) => {
 };
 
 exports.getProductsByTag = async (req, res) => {
-  const tags = await Product.getTagsList();
-  //res.json(tags); 
+  //Get the tag selected by the user
   const tag = req.params.tag;
-
-  res.render('tag', { tags, title: 'Tags', tag })
+  const tagQuery = tag || { $exists: true };
+  //Find the list of tags of one specific product
+  const tagsPromise = Product.getTagsList();
+  //Find the Products where the tags list includes a specific tag
+  const productsPromise = Product.find({ tags: tagQuery })
+  //Now we have two promises: tagsPromise and productPromise, they way whe await for
+  //multiple promises that come back is using promiseAll
+  //const result =  await Promise.all([ tagsPromise, productsPromise]);
+  //Use object destructuring
+  const [tags, products] =  await Promise.all([ tagsPromise, productsPromise]);
+  //res.json(tags);
+  //res.json(products);
+  res.render('tag', { tags, title: 'Tags', tag, products })
 };
