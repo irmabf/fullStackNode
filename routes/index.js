@@ -23,4 +23,8 @@ router.get('/products/:id/edit', catchErrors(productController.editProduct));
 
 router.get('/product/:slug', catchErrors(productController.getProductBySlug));
 
+router.get('/tags', catchErrors(productController.getProductsByTag));
+
+router.get('/tags/:tag', catchErrors(productController.getProductsByTag));
+
 module.exports = router;

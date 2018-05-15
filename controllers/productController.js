@@ -88,3 +88,11 @@ exports.getProductBySlug = async (req, res) => {
   if(!product) return next();
   res.render('product', { product, title: product.name });
 };
+
+exports.getProductsByTag = async (req, res) => {
+  const tags = await Product.getTagsList();
+  //res.json(tags); 
+  const tag = req.param.tag;
+
+  res.render('tag', { tags, title: 'Tags', tag })
+};
