@@ -39,7 +39,12 @@
       svg {
         transform: scale(1.2)
       }
-      background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, $yellow 85%, #48ded4 95%) fixed;
+      background: linear-gradient(90deg, #ed6ea0 0%, #ec8c69 100%);
+      //background: linear-gradient(90deg, #874da2 0%, #c43a30 100%);
+      //background: linear-gradient(90deg, #13547a 0%, #80d0c7 100%);
+  //background: linear-gradient(to top, #feada6 0%, #f5efef 100%);
+      //background: linear-gradient(to right, #fa709a 0%, #fee140 100%);
+      //background: linear-gradient(90deg, #48ded4 0%, #a026bf 20%, #e82c75 60%, $yellow 85%, #48ded4 95%) fixed;
       // background: none;
     }
     &--logo {
