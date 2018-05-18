@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import dompurify from 'dompurify';
 function searchResultsHTML(products){
   return products.map(product => {
     return `
@@ -27,12 +27,13 @@ function typeAhead(search){
       .then(res => {
         if(res.data.length){
           console.log('There is something to show');
-          const html = searchResultsHTML(res.data);
+          //Protect against Cross-site scripting
+          const html =  dompurify.sanitize(searchResultsHTML(res.data));
           searchResults.innerHTML = html;
           return;
         }
         //tell the user that nothing came back
-        searchResults.innerHTML = `<div class=".search__result">No results for ${this.value} found!</div>`;
+        searchResults.innerHTML = dompurify.sanitize(`<div class=".search__result">No results for ${this.value} found!</div>`);
       })
         .catch(err => {
           console.log(err);
