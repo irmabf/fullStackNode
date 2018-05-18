@@ -112,3 +112,20 @@ exports.getProductsByTag = async (req, res) => {
   //res.json(products);
   res.render('tag', { tags, title: 'Tags', tag, products })
 };
+
+exports.searchProducts = async (req, res) => {
+  const products = await Product
+  .find({
+      $text: {
+        $search: req.query.q
+      }
+    }, {
+      score: { $meta: 'textScore' }
+    })
+  .sort({
+      score: { $meta: 'textScore'}
+    });
+    //limit results to 10
+  //.limit(20);
+  res.json(products);
+};

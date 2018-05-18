@@ -52,4 +52,12 @@ router.post('/account/reset/:token',
     authController.confirmedPasswords, 
     catchErrors(authController.update)
 );
+
+/**
+ * API
+ */
+
+router.get('/api/search', catchErrors(productController.searchProducts));
+
 module.exports = router;
+

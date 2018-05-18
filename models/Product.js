@@ -44,6 +44,12 @@ const productSchema = new mongoose.Schema({
   }
 });
 
+//Define our indexes
+productSchema.index({
+  name: 'text',
+  description:'text'
+});
+
 productSchema.pre('save', async function(next) {
   if(!this.isModified('name')){
     next(); //skip it
