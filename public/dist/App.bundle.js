@@ -979,7 +979,12 @@ exports.$$ = $$;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var axios = __webpack_require__(12);
+
+var _axios = __webpack_require__(12);
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function searchResultsHTML(products) {
   return products.map(function (product) {
@@ -993,21 +998,53 @@ function typeAhead(search) {
   var searchResults = search.querySelector('.search__results');
 
   searchInput.on('input', function () {
+    var _this = this;
+
     if (!this.value) {
       searchResults.style.display = 'none';
       return;
     }
     searchResults.style.display = 'block';
-    searchResults.innerHTML = '';
-    axios.get('/api/search?q=' + this.value).then(function (res) {
+
+    _axios2.default.get('/api/search?q=' + this.value).then(function (res) {
       if (res.data.length) {
         console.log('There is something to show');
         var html = searchResultsHTML(res.data);
         searchResults.innerHTML = html;
+        return;
       }
+      //tell the user that nothing came back
+      searchResults.innerHTML = '<div class=".search__result">No results for ' + _this.value + ' found!</div>';
     }).catch(function (err) {
       console.log(err);
     });
+  });
+  //handle keyboard inputs
+  searchInput.on('keyup', function (e) {
+    //if they arent pressing up, down or enter, skip
+    if (![38, 40, 13].includes(e.keyCode)) {
+      return; // nah
+    }
+    var activeClass = 'search__result--active';
+    var current = search.querySelector('.' + activeClass);
+    var items = search.querySelectorAll('.search__result');
+    var next = void 0;
+    if (e.keyCode === 40 && current) {
+      next = current.nextElementSibling || items[0];
+    } else if (e.keyCode === 40) {
+      next = items[0];
+    } else if (e.keyCode === 38 && current) {
+      next = current.previousElementSibling || items[items.length - 1];
+    } else if (e.keyCode === 38) {
+      next = items[items.length - 1];
+    } else if (e.keyCode === 13 && current.href) {
+      window.location = current.href;
+      return;
+    }
+    if (current) {
+      current.classList.remove(activeClass);
+    }
+    next.classList.add(activeClass);
   });
 }
 
