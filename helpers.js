@@ -21,7 +21,7 @@ exports.icon = (name) => fs.readFileSync(`./public/images/icons/${name}.svg`);
 exports.siteName = `The Reusing Net`;
 
 exports.menu = [
-  { slug: '/products', title: 'All Products', icon: 'store', },
+  { slug: '/products', title: 'All', icon: 'store', },
   { slug: '/tags', title: 'Categories', icon: 'tag', },
   { slug: '/top', title: 'Top', icon: 'top', },
   { slug: '/add', title: 'Add', icon: 'add', },

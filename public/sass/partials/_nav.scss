@@ -93,8 +93,9 @@
   }
 }
 
-@media all and (max-width: 650px) {
+@media all and (max-width: 450px) {
   .nav {
+    font-size: 1rem;
     &__section {
       width: 100%;
       &--user {
@@ -107,6 +108,9 @@
         svg {
           display: none;
         }
+        .icon.icon-heart{
+          width: 500px;
+        }
       }
     }
     &__item {
@@ -116,11 +120,16 @@
       width: 100%;
       svg {
         // width: 5px;
-        max-width: 100%;
+        //max-width: 50%;
+        display: none;
+      }
+      svg.icon.icon-heart{
+        width: 500px;
       }
       &--logo {
-        svg {
+        span {
           width:100%;
+          font-size: 1.5rem;
         }
       }
     }
@@ -128,5 +137,6 @@
   .heart-count:before {
     content: '♥️';
     margin-right: 1rem;
+
   }
 }

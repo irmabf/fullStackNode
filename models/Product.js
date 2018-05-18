@@ -36,7 +36,12 @@ const productSchema = new mongoose.Schema({
       required: 'You must supply an address!'
     }
   },
-  photo: String
+  photo: String,
+  seller: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'Seller data must be supplied'
+  }
 });
 
 productSchema.pre('save', async function(next) {

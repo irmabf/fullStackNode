@@ -47,6 +47,7 @@ exports.resize = async (req, res, next) => {
 
 exports.createProduct = async (req, res) => {
   //res.json(req.body);
+  req.body.seller = req.user._id;
   const product = await (new Product(req.body)).save();
   req.flash('success', `Successfully Added ${product.name}`);
   res.redirect(`/product/${product.slug}`);
@@ -58,14 +59,19 @@ exports.getProducts = async (req, res) => {
   res.render('products', { title: 'Articles', products });
 };
 
+const confirmOwner = (product, user) => {
+  if (!product.seller.equals(user.id)){
+    throw Error('You must be the seller in order to edit the product');
+  }
+};
+
 exports.editProduct = async (req, res) => {
   //1. Find the product given the id 
   const product = await Product.findOne({ _id: req.params.id });
   //2. Confirm the user is the seller
-  //TODO
+  confirmOwner(product, req.user);
   //3. Render out the edit form so the user can update their product
   res.render('editProduct', { title: `Edit ${product.name}`, product });
-
 };
 
 exports.updateProduct = async (req, res) => {
