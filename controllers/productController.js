@@ -37,12 +37,12 @@ exports.resize = async (req, res, next) => {
   //console.log(req.file);
   const extension = req.file.mimetype.split('/')[1];
   req.body.photo = `${uuid.v4()}.${extension}`;
-  //now we resize 
+  //now we resize
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
   await photo.write(`./public/uploads/${req.body.photo}`);
   //once we have written the photo to our filesystem, keep going
-  next();  
+  next();
 };
 
 exports.createProduct = async (req, res) => {
@@ -66,7 +66,7 @@ const confirmOwner = (product, user) => {
 };
 
 exports.editProduct = async (req, res) => {
-  //1. Find the product given the id 
+  //1. Find the product given the id
   const product = await Product.findOne({ _id: req.params.id });
   //2. Confirm the user is the seller
   confirmOwner(product, req.user);
@@ -77,7 +77,7 @@ exports.editProduct = async (req, res) => {
 exports.updateProduct = async (req, res) => {
   //set the location data to be a point
   req.body.location.type = 'Point';
-  //1. Find and update the product 
+  //1. Find and update the product
   const product = await Product.findOneAndUpdate({ _id: req.params.id}, req.body, {
     new: true, //return the new product instead of the old one
     runValidators: true
@@ -127,5 +127,38 @@ exports.searchProducts = async (req, res) => {
     });
     //limit results to 10
   //.limit(20);
+  res.json(products);
+};
+
+exports.mapProducts = async (req, res) => {
+  //res.json({ it: 'Works'});
+  //We hit this enpoint with two queries, the lat and the long
+  //The way that mongodb expects us to pass the coordinates to it is
+  //as an array of long and lat numbers
+  //this down below gives as an array of strings, but we need an array of numbers
+  // const coordinates = [req.query.lng, req.query.lat];
+  //So, for getting an array of numbers, we map over it an pass it to parseFloat
+  const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
+  // res.json(coordinates);
+  //Next, we wanna make our query so that when we do product.find we are gonna
+  //to be able to pass it
+  //It´s gonna be a big query, so we need to be able to write it in a separate object
+  //and pass it in
+  const q = {
+    //We search search for products where the location property is $near
+    /**$near is an operator in mongodb and it will allow us to just search for
+     * products that are near a certain lat and long
+     */
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates: coordinates
+        },
+        // $maxDistance: 10000 //10 thousand metters -> 10KM
+      }
+    }
+  }
+  const products = await Product.find(q).select('slug name description location price').limit(10);
   res.json(products);
 };

@@ -49,6 +49,8 @@ productSchema.index({
   name: 'text',
   description:'text'
 });
+//Store location as geospacial data to set up google maps api search
+productSchema.index({ location: '2dsphere'});
 
 productSchema.pre('save', async function(next) {
   if(!this.isModified('name')){
