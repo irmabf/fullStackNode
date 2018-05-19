@@ -162,3 +162,7 @@ exports.mapProducts = async (req, res) => {
   const products = await Product.find(q).select('slug name description location price').limit(10);
   res.json(products);
 };
+
+exports.mapPage = (req, res) => {
+  res.render('map', { title: 'Map '})
+}
