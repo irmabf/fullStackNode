@@ -24,7 +24,7 @@
     transform: skew(0, -3deg);
     line-height: 1.1;
     background-image: linear-gradient(to right, rgba(255, 196, 14, 0.8) 100%, rgba(255, 196, 14, 0.8) 50%);
-    margin-bottom:4rem; 
+    margin-bottom:4rem;
     p {
       font-weight: bold;
       word-wrap: break-word;
@@ -80,7 +80,7 @@
     width: 100%;
     top: 0;
     right: 0;
-   
+
     opacity: 0.6;
     z-index: 1;
     clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
@@ -96,3 +96,5 @@
     clip-path: polygon(0 0, 100% 0, 100% 90%, 0% 100%);
   }
 }
+
+
