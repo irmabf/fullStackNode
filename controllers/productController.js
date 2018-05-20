@@ -188,5 +188,15 @@ exports.heartProduct = async (req, res) => {
       { new: true }
     );
   res.json(user);
-
 };
+
+exports.getHearts = async (req, res) => {
+  //Query the products and find those whose id are in our hearts array
+    const products = await Product.find({
+      //For finding something in an array
+      _id: { $in: req.user.hearts }
+  });
+ // res.json(products);
+ res.render('products', { title: 'Liked Products', products });
+};
+

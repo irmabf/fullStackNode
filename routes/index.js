@@ -53,6 +53,8 @@ router.post('/account/reset/:token',
     catchErrors(authController.update)
 );
 router.get('/map', productController.mapPage);
+router.get('/hearts', authController.isLoggedIn, catchErrors(productController.getHearts));
+
 
 /**
  * API
