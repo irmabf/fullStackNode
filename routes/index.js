@@ -60,6 +60,7 @@ router.get('/map', productController.mapPage);
 
 router.get('/api/search', catchErrors(productController.searchProducts));
 router.get('/api/products/near', catchErrors(productController.mapProducts));
+router.post('/api/products/:id/heart', catchErrors(productController.heartProduct));
 
 module.exports = router;
 

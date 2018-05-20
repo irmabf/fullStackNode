@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Product = mongoose.model('Product');
+const User = mongoose.model('User');
 const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
@@ -159,10 +160,33 @@ exports.mapProducts = async (req, res) => {
       }
     }
   }
-  const products = await Product.find(q).select('slug name description location price').limit(10);
+  const products = await Product.find(q).select('slug name description location price photo').limit(10);
   res.json(products);
 };
 
 exports.mapPage = (req, res) => {
   res.render('map', { title: 'Map '})
 }
+
+exports.heartProduct = async (req, res) => {
+  const hearts = req.user.hearts.map(obj => obj.toString());
+  //We check if our heart includes the current heart that we just posted
+  //if it is in there, $pull (mongodb operator)-> with this we are adding the functionallity
+  //to remove the heart t
+  /**
+   * Now we check if the heart that we are just posint is included in the hearts array that we
+   * are getting from our collection of hearts, if it is, we need to remove it,dislike functionality
+   * if it isnt: we push it in-> like functionality
+   */
+  const operator = hearts.includes(req.params.id) ? '$pull' : '$addToSet';
+  const user = await User
+      //find the user
+    .findByIdAndUpdate(req.user._id,
+        //update
+      { [operator]: { hearts: req.params.id }},
+      //Return the updated user
+      { new: true }
+    );
+  res.json(user);
+
+};
