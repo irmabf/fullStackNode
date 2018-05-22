@@ -13,7 +13,6 @@ mixin productCard(product = {})
             .store__action.store__action--edit
               a(href=`/products/${product._id}/edit`)
                 != h.icon('pencil')
-            button soon
         img(src=`/uploads/${product.photo || 'store.jpg'}`)
         h2.title
           a(href=`/product/${product.slug}`) #{product.name}

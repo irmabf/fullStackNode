@@ -24,6 +24,5 @@ exports.menu = [
   { slug: '/products', title: 'All', icon: 'store', },
   { slug: '/tags', title: 'Categories', icon: 'tag', },
   //{ slug: '/top', title: 'Top', icon: 'top', },
-  { slug: '/add', title: 'Add', icon: 'add', },
-  { slug: '/map', title: 'Map', icon: 'map', },
+  { slug: '/add', title: 'Add', icon: 'add', }
 ];

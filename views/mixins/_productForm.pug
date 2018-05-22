@@ -1,20 +1,20 @@
 mixin productForm(product = {})
   form(action=`/add/${product._id || ''}` method="POST" class="card" enctype="multipart/form-data")
-    label(for="name") Article Name 
+    label(for="name") Article Name
     input(type="text" name="name" value=product.name)
     label(for="price") Price $
     input(type="number" name="price" value=product.price)
     label(for="description") Description
     textarea(name="description")= product.description
-    //- Image upload 
+    //- Image upload
     label(for="photo") Photo
       input(type="file" name="photo" id="photo" accept="image/gif, image/png, image/jpg")
-      if product.photo 
+      if product.photo
         img(src=`/uploads/${product.photo}`, alt=product.name width=200)
     //- address, lng and lat
     label(for="address") Address
     input(type="text" id="address" name="location[address]" value=(product.location && product.location.address))
-    label(for="lng") Address Lng 
+    label(for="lng") Address Lng
     input(type="text" id="lng" name="location[coordinates][0]" value=(product.location && product.location.coordinates[0]) required)
     label(for="lng") Address Lat
     input(type="text" id="lat" name="location[coordinates][1]" value=(product.location && product.location.coordinates[1]) required)
