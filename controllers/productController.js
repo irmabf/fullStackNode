@@ -187,7 +187,7 @@ exports.heartProduct = async (req, res) => {
       //Return the updated user
       { new: true }
     );
-  res.json(user);
+  //res.json(user);
 };
 
 exports.getHearts = async (req, res) => {
