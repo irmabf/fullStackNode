@@ -4,7 +4,7 @@ const User = mongoose.model('User');
 const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
-const knox = require('knox');
+
 
 //Setup multer options
 const multerOptions = {
@@ -19,13 +19,6 @@ const multerOptions = {
   }
 };
 
-//Setup a knox client
-
-const knoxClient = knox.createClient({
-  key: process.env.S3AccessKey,
-  secret: process.env.S3Secret,
-  bucket: process.env.S3Bucket
-});
 
 exports.homePage = (req, res) => {
   console.log(req.name);
