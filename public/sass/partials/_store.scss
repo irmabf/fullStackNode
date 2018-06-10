@@ -49,7 +49,7 @@
   padding-top: 10px;
   padding-bottom: 20px;
   display: flex;
-  color: white;
+  color:whitesmoke;
   align-items: center;
   justify-content: space-around;
 }
@@ -58,12 +58,22 @@
   font-size: 10px;
   svg {
     width: 25px;
-    fill: white
+    fill: whitesmoke;
   }
   &--edit {
     a {
       border-bottom: 0;
     }
+  }
+}
+
+.store__details__delete{
+  text-align: center;
+  padding: 10px 14px;
+  background:	#FF8C00;
+  a{
+    color: #FFFFF0;
+    font-size: bold;
   }
 }
 

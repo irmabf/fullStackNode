@@ -15,13 +15,18 @@ router.post('/add',
     catchErrors(productController.createProduct)
   );
 
-router.post('/add/:id/',
+router.get('/add/:id/',
     productController.upload,
     catchErrors(productController.resize),
     catchErrors(productController.updateProduct)
 );
 
+router.get('/delete/:id/',
+    catchErrors(productController.deleteProductYes)
+);
+
 router.get('/products/:id/edit', catchErrors(productController.editProduct));
+router.get('/products/:id/delete', catchErrors(productController.deleteProduct));
 
 router.get('/product/:slug', catchErrors(productController.getProductBySlug));
 

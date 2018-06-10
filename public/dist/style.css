@@ -503,6 +503,11 @@ input, textarea {
   input.input--error, textarea.input--error {
     border-color: red; }
 
+.back {
+  border-bottom: solid 1px black;
+  color: black;
+  width: 100%; }
+
 label {
   padding: 10px 0;
   display: block; }
@@ -764,7 +769,7 @@ label {
   padding-bottom: 20px;
   display: -ms-flexbox;
   display: flex;
-  color: white;
+  color: whitesmoke;
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: distribute;
@@ -774,9 +779,17 @@ label {
   font-size: 10px; }
   .store__action svg {
     width: 25px;
-    fill: white; }
+    fill: whitesmoke; }
   .store__action--edit a {
     border-bottom: 0; }
+
+.store__details__delete {
+  text-align: center;
+  padding: 10px 14px;
+  background: #FF8C00; }
+  .store__details__delete a {
+    color: #FFFFF0;
+    font-size: bold; }
 
 .store__hero {
   position: relative;
@@ -951,7 +964,7 @@ label {
     top: 0; }
   .heart__button svg {
     width: 25px;
-    fill: white; }
+    fill: whitesmoke; }
   .heart__button--hearted svg {
     fill: red; }
   .heart__button--float:after {

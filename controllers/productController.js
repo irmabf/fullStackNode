@@ -4,7 +4,9 @@ const User = mongoose.model('User');
 const multer = require('multer');
 const jimp = require('jimp');
 const uuid = require('uuid');
+const knox = require('knox');
 
+//Setup multer options
 const multerOptions = {
   storage: multer.memoryStorage(),
   fileFilter(req, file, next){
@@ -17,6 +19,13 @@ const multerOptions = {
   }
 };
 
+//Setup a knox client
+
+const knoxClient = knox.createClient({
+  key: process.env.S3AccessKey,
+  secret: process.env.S3Secret,
+  bucket: process.env.S3Bucket
+});
 
 exports.homePage = (req, res) => {
   console.log(req.name);
@@ -41,6 +50,7 @@ exports.resize = async (req, res, next) => {
   //now we resize
   const photo = await jimp.read(req.file.buffer);
   await photo.resize(800, jimp.AUTO);
+  //
   await photo.write(`./public/uploads/${req.body.photo}`);
   //once we have written the photo to our filesystem, keep going
   next();
@@ -75,6 +85,22 @@ exports.editProduct = async (req, res) => {
   res.render('editProduct', { title: `Edit ${product.name}`, product });
 };
 
+exports.deleteProduct = async (req, res) => {
+  //1. Find the product given the id
+  const product = await Product.findOne({ _id: req.params.id });
+  //2. Confirm the user is the seller
+  confirmOwner(product, req.user);
+  //3. Render out the edit form so the user can update their product
+  res.render('deleteProduct', { title: `Delete ${product.name}`, product });
+
+  /*try {
+    db.orders.deleteOne( { "_id" : ObjectId("563237a41a4d68582c2509da") } );
+ } catch (e) {
+    print(e);
+ }*/
+ //await Product.deleteOne({ _id: req.params.id})
+};
+
 exports.updateProduct = async (req, res) => {
   //set the location data to be a point
   req.body.location.type = 'Point';
@@ -85,6 +111,20 @@ exports.updateProduct = async (req, res) => {
   }).exec();
   req.flash('success', `Succesfully updated <strong>${product.name}</strong>. <a href="/products/${product.slug}">View article →</a>`);
   res.redirect(`/products/${product._id}/edit`);
+  //2. Redirect to the product and tell the user it worked
+};
+
+exports.deleteProductYes = async (req, res) => {
+
+  //1. Find and update the product
+
+  await Product.findByIdAndRemove(req.params.id, function(err) {
+    if (err)
+        res.send(err);
+    else
+        //res.json({ message: 'Offer Deleted!'});
+        res.redirect(`/products`);
+});
   //2. Redirect to the product and tell the user it worked
 };
 

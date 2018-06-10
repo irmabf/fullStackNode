@@ -1013,7 +1013,7 @@ function ajaxHeart(e) {
       _this.heart.classList.add('heart__button--float');
       setTimeout(function () {
         return _this.heart.classList.remove('heart__button--float');
-      }, 2500);
+      }, .5);
     }
   }).catch(console.error);
 }
