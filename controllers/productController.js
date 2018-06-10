@@ -114,6 +114,7 @@ exports.updateProduct = async (req, res) => {
   //2. Redirect to the product and tell the user it worked
 };
 
+
 exports.deleteProductYes = async (req, res) => {
 
   //1. Find and update the product
