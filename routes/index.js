@@ -9,6 +9,10 @@ router.get('/', catchErrors(productController.getProducts));
 router.get('/products', catchErrors(productController.getProducts));
 router.get('/add',  authController.isLoggedIn, productController.addProduct);
 
+router.get('/delete/:id/',
+    catchErrors(productController.deleteProductYes)
+);
+
 router.post('/add',
     productController.upload,
     catchErrors(productController.resize),
@@ -21,9 +25,7 @@ router.get('/add/:id/',
     catchErrors(productController.updateProduct)
 );
 
-router.get('/delete/:id/',
-    catchErrors(productController.deleteProductYes)
-);
+
 
 router.get('/products/:id/edit', catchErrors(productController.editProduct));
 router.get('/products/:id/delete', catchErrors(productController.deleteProduct));
