@@ -5,13 +5,11 @@ const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const { catchErrors } = require('../handlers/errorHandlers');
 // Do work here
+
+
 router.get('/', catchErrors(productController.getProducts));
 router.get('/products', catchErrors(productController.getProducts));
 router.get('/add',  authController.isLoggedIn, productController.addProduct);
-
-router.get('/delete/:id/',
-    catchErrors(productController.deleteProductYes)
-);
 
 router.post('/add',
     productController.upload,
@@ -19,12 +17,15 @@ router.post('/add',
     catchErrors(productController.createProduct)
   );
 
-router.get('/add/:id/',
-    productController.upload,
-    catchErrors(productController.resize),
-    catchErrors(productController.updateProduct)
+router.post('/add/:id/',
+  productController.upload,
+  catchErrors(productController.resize),
+  catchErrors(productController.updateProduct)
 );
 
+router.get('/delete/:id/',
+    catchErrors(productController.deleteProductYes)
+);
 
 
 router.get('/products/:id/edit', catchErrors(productController.editProduct));

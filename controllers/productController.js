@@ -86,26 +86,8 @@ exports.deleteProduct = async (req, res) => {
   //3. Render out the edit form so the user can update their product
   res.render('deleteProduct', { title: `Delete ${product.name}`, product });
 
-  /*try {
-    db.orders.deleteOne( { "_id" : ObjectId("563237a41a4d68582c2509da") } );
- } catch (e) {
-    print(e);
- }*/
- //await Product.deleteOne({ _id: req.params.id})
 };
 
-exports.updateProduct = async (req, res) => {
-  //set the location data to be a point
-  req.body.location.type = 'Point';
-  //1. Find and update the product
-  const product = await Product.findOneAndUpdate({ _id: req.params.id}, req.body, {
-    new: true, //return the new product instead of the old one
-    runValidators: true
-  }).exec();
-  req.flash('success', `Succesfully updated <strong>${product.name}</strong>. <a href="/products/${product.slug}">View article →</a>`);
-  res.redirect(/products/);
-  //2. Redirect to the product and tell the user it worked
-};
 
 
 exports.deleteProductYes = async (req, res) => {
@@ -121,6 +103,20 @@ exports.deleteProductYes = async (req, res) => {
 });
   //2. Redirect to the product and tell the user it worked
 };
+
+exports.updateProduct = async (req, res) => {
+  //set the location data to be a point
+  req.body.location.type = 'Point';
+  //1. Find and update the product
+  const product = await Product.findOneAndUpdate({ _id: req.params.id}, req.body, {
+    new: true, //return the new product instead of the old one
+    runValidators: true
+  }).exec();
+  req.flash('success', `Succesfully updated <strong>${product.name}</strong>. <a href="/product/${product.slug}">View article →</a>`);
+  res.redirect(`/products/${product._id}/edit`);
+  //2. Redirect to the product and tell the user it worked
+};
+
 
 exports.getProductBySlug = async (req, res) => {
   //res.json(req.params);
@@ -220,6 +216,7 @@ exports.heartProduct = async (req, res) => {
       { [operator]: { hearts: req.params.id }},
       //Return the updated user
       { new: true }
+
     );
   //res.json(user);
   res.redirect(`/products`);
